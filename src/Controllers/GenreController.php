@@ -9,6 +9,7 @@
 namespace Controllers;
 
 
-class GenreController {
+class GenreController  extends BaseController
+{
 
 } 

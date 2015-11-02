@@ -153,5 +153,42 @@ abstract class AbstractModel
         return $res[0];
     }
 
+    /**
+     * @param $modelName AbstractModel
+     * @param $columnName string
+     * @return mixed
+     */
+    public function hasOne($modelName, $localColumnName){
+        return $modelName::find([['id', '=', $this->$localColumnName]])[0];
+    }
+
+    /**
+     * @param $modelName AbstractModel
+     * @param $columnName string
+     * @return mixed
+     */
+    public function belongsTo($modelName, $remoteColumnName){
+        return $modelName::find([[$remoteColumnName, '=', $this->id]]);
+    }
+
+    public function belongsToMany($modelName, $joinTableName, $currentColumnName, $remoteColumnName){
+        $remoteTable = $modelName::getTableName();
+        $sql = "SELECT * FROM $remoteTable WHERE `id` in (SELECT $remoteColumnName FROM $joinTableName WHERE $currentColumnName = :thisId)";
+
+        $stmt = self::$pdo->prepare($sql);
+        $stmt->bindValue('thisId', $this->id);
+        $stmt->execute();
+
+        $res = [];
+
+        while($row = $stmt->fetch()){
+            $obj = new $modelName();
+            foreach($row as $field => $value)
+                $obj->$field = $value;
+            $res[] = $obj;
+        }
+
+        return $res;
+    }
 
 }
