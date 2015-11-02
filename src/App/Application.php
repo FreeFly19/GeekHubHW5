@@ -8,9 +8,6 @@
 
 namespace App;
 
-use App\Provider\ServiceProviderInterface;
-use ActiveRecord\AbstractModel;
-
 class Application
 {
     public function __construct($dbConfig)
