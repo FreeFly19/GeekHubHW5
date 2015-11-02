@@ -13,20 +13,43 @@ use Models\Author;
 
 class AuthorController extends BaseController
 {
-    public function Index(){
+    public function Index()
+    {
         return json_encode(Author::find());
     }
 
-    public function Add(){
-        $postdata = file_get_contents("php://input");
-        $requestData = json_decode($postdata);
-
+    public function Add()
+    {
         $a = new Author();
-        $a->name = $requestData->name;
-        $a->surname = $requestData->surname;
+        $a->name = $this->getData()->name;
+        $a->surname = $this->getData()->surname;
         $a->save();
     }
 
+    public function Delete()
+    {
+        $id = $this->getData()->id;
+        Author::findById($id)->remove();
+    }
 
+    public function GetBooks()
+    {
+        $id = $this->getData()->id;
+        return json_encode(Author::findById($id)->getBooks());
+    }
+
+    public function AttachBook()
+    {
+        $book_id = $this->getData()->book_id;
+        $author_id = $this->getData()->author_id;
+        Author::findById($author_id)->attachBook($book_id);
+    }
+
+    public function DetachBook()
+    {
+        $book_id = $this->getData()->book_id;
+        $author_id = $this->getData()->author_id;
+        Author::findById($author_id)->detachBook($book_id);
+    }
 
 } 

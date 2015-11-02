@@ -43,16 +43,19 @@ class BookController extends BaseController
     {
         $book_id = $this->getData()->book_id;
         $author_id = $this->getData()->author_id;
+        Book::findById($book_id)->detachAuthor($author_id);
     }
 
     public function GetAuthors()
     {
-
+        $id = $this->getData()->id;
+        return json_encode(Book::findById($id)->getAuthors());
     }
 
     public function GetGenre()
     {
-
+        $id = $this->getData()->id;
+        return json_encode(Book::findById($id)->getGenre());
     }
 
 } 
