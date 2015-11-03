@@ -37,4 +37,42 @@ DBConnector::getPDO()->query($createTableAuthorBook);
 DBConnector::getPDO()->query($createTableBooks);
 DBConnector::getPDO()->query($createTableGenres);
 
-echo "Tables has been created!!!";
+echo "Tables has been created!!!<br>\n";
+
+$addAuthors = "INSERT INTO `authors`(`name`, `surname`)
+                                     VALUES('Steven', 'McConnell'),
+                                           ('Martin',  'Fowler'),
+                                           ('Bjarne', 'Stroustrup'),
+                                           ('Eric', 'Freeman'),
+                                           ('Elizabeth', 'Freeman'),
+                                           ('Elena', 'Voronkova')";
+
+$addBooks = "INSERT INTO `books`(`name`, `genre_id`)
+                                     VALUES('Complete Code', 1),
+                                           ('Refactoring', 1),
+                                           ('Patterns of enterprise application architecture', 1),
+                                           ('Head First Design Patterns', 1),
+                                           ('Head First HTML and CSS', 2),
+                                           ('How to Marry a Prince', 3)";
+
+$addReferenceBookAuthor = "INSERT INTO `author_book`(`author_id`, `book_id`)
+                                     VALUES(1, 1),
+                                           (2, 2),
+                                           (2, 3),
+                                           (4, 4),
+                                           (5, 4),
+                                           (4, 5),
+                                           (5, 5),
+                                           (6, 6)";
+
+$addGenre = "INSERT INTO `genres`(`name`)
+                                     VALUES('OOP & patterns books'),
+                                           ('HTML & CSS'),
+                                           ('For female')";
+
+DBConnector::getPDO()->query($addAuthors);
+DBConnector::getPDO()->query($addBooks);
+DBConnector::getPDO()->query($addReferenceBookAuthor);
+DBConnector::getPDO()->query($addGenre);
+
+echo "Records added to dababase!!!";
