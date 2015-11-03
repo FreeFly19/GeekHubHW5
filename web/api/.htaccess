@@ -1,0 +1,10 @@
+RewriteEngine on
+
+RewriteRule ^([a-zA-Z0-9_-]+)/?([a-zA-Z0-9_-]+)?/?$ index.php?controller=$1&action=$2
+
+
+#
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#
+#RewriteRule . index.php
