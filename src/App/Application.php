@@ -18,10 +18,9 @@ class Application
 
     public function run()
     {
-        $controllerName = "Controllers\\". $_GET['controller'] ."Controller";
+        $controllerName = "Controllers\\" . $_GET['controller'] . "Controller";
 
-        if(!class_exists($controllerName))
-        {
+        if (!class_exists($controllerName)) {
             header('HTTP/1.1 404 Not Found');
             die('{"Error": "Controller not found"}');
         }
@@ -31,21 +30,17 @@ class Application
 
         $action = $_GET['action'];
 
-        if($action!="")
-        {
-            if(method_exists($controller, $action))
+        if ($action != "") {
+            if (method_exists($controller, $action)) {
                 echo $controller->$action();
-            else
-            {
+            } else {
                 header('HTTP/1.1 404 Not Found');
                 die('{"Error": "Action not found"}');
             }
-        }
-        else{
-            if(method_exists($controller, 'Index')){
+        } else {
+            if (method_exists($controller, 'Index')) {
                 echo $controller->Index();
-            }
-            else{
+            } else {
                 header('HTTP/1.1 404 Not Found');
                 die('{"Error": "Index action not found"}');
             }

@@ -10,10 +10,12 @@ namespace Models;
 
 use App\AbstractModel;
 
-class Genre extends AbstractModel {
+class Genre extends AbstractModel
+{
     protected $fields = ['id', 'name'];
 
-    public function getBooks(){
+    public function getBooks()
+    {
         return $this->belongsTo("Models\\Book", "genre_id");
     }
 } 

@@ -9,7 +9,8 @@
 namespace Controllers;
 
 
-class BaseController {
+class BaseController
+{
     protected function getData()
     {
         $postdata = file_get_contents("php://input");

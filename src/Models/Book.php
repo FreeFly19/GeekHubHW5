@@ -10,14 +10,16 @@ namespace Models;
 
 use App\AbstractModel;
 
-class Book extends AbstractModel {
+class Book extends AbstractModel
+{
     protected $fields = ['id', 'name', 'genre_id'];
 
     public $id;
     public $name;
     public $genre_id;
 
-    public function attachAuthor($authorId){
+    public function attachAuthor($authorId)
+    {
         $bookId = $this->id;
         $stmt = self::$pdo->prepare("INSERT INTO `author_book`(`book_id`, `author_id`) VALUES(:bookId, :authorId)");
         $stmt->bindValue('bookId', $bookId);
@@ -25,7 +27,8 @@ class Book extends AbstractModel {
         $stmt->execute();
     }
 
-    public function detachAuthor($authorId){
+    public function detachAuthor($authorId)
+    {
         $bookId = $this->id;
         $stmt = self::$pdo->prepare("DELETE FROM `author_book` WHERE `author_id` = :authorId AND `book_id` = :bookId)");
         $stmt->bindValue('bookId', $bookId);
@@ -34,11 +37,13 @@ class Book extends AbstractModel {
     }
 
 
-    public function getGenre(){
+    public function getGenre()
+    {
         return $this->hasOne('Models\\Genre', 'genre_id');
     }
 
-    public function getAuthors(){
+    public function getAuthors()
+    {
         return $this->belongsToMany('Models\\Author', "author_book", "book_id", "author_id");
     }
 } 

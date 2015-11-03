@@ -10,7 +10,7 @@ namespace Controllers;
 
 use Models\Genre;
 
-class GenreController  extends BaseController
+class GenreController extends BaseController
 {
     public function Index()
     {

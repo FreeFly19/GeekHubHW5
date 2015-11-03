@@ -9,30 +9,33 @@
 namespace App;
 
 
-class DBConnector {
+class DBConnector
+{
 
     private static $pdo = null;
 
     private static $configs = [];
 
-    private function __construct(){
+    private function __construct()
+    {
     }
 
-    public static function getPDO(){
-        if(self::$pdo == null)
-        {
+    public static function getPDO()
+    {
+        if (self::$pdo == null) {
             $dbConfig = self::$configs;
             self::$pdo = new \PDO(
-                    $dbConfig['driver'] . ":host=" . $dbConfig['host'] . ";dbname=" . $dbConfig['database'] . ";charset=" . $dbConfig['charset'],
-                    $dbConfig['user'],
-                    $dbConfig['password'],
-                    $dbConfig['opt']
-                );
+                $dbConfig['driver'] . ":host=" . $dbConfig['host'] . ";dbname=" . $dbConfig['database'] . ";charset=" . $dbConfig['charset'],
+                $dbConfig['user'],
+                $dbConfig['password'],
+                $dbConfig['opt']
+            );
         }
         return self::$pdo;
     }
 
-    public static function setConfig($config){
+    public static function setConfig($config)
+    {
         self::$configs = $config;
     }
 

@@ -114,7 +114,7 @@ abstract class AbstractModel
         $cond = "";
 
         foreach ($params as $value) {
-            $cond .=  " and " .$value[0] . " " . $value[1] . " :" . $value[0];
+            $cond .= " and " . $value[0] . " " . $value[1] . " :" . $value[0];
         }
 
         $sql = "SELECT * FROM " . static::getTableName() . " WHERE 1 = 1" . $cond;
@@ -129,7 +129,7 @@ abstract class AbstractModel
 
         $result = [];
 
-        while($row = $stmt->fetch()) {
+        while ($row = $stmt->fetch()) {
 
             $obj = new static();
 
@@ -144,12 +144,16 @@ abstract class AbstractModel
     /**
      * @param $id int
      */
-    public static function findById($id){
-        $res = static::find([
+    public static function findById($id)
+    {
+        $res = static::find(
+            [
                 ['id', '=', $id]
-            ]);
-        if(count($res)==0)
+            ]
+        );
+        if (count($res) == 0) {
             return null;
+        }
         return $res[0];
     }
 
@@ -158,7 +162,8 @@ abstract class AbstractModel
      * @param $columnName string
      * @return mixed
      */
-    public function hasOne($modelName, $localColumnName){
+    public function hasOne($modelName, $localColumnName)
+    {
         return $modelName::find([['id', '=', $this->$localColumnName]])[0];
     }
 
@@ -167,11 +172,13 @@ abstract class AbstractModel
      * @param $columnName string
      * @return mixed
      */
-    public function belongsTo($modelName, $remoteColumnName){
+    public function belongsTo($modelName, $remoteColumnName)
+    {
         return $modelName::find([[$remoteColumnName, '=', $this->id]]);
     }
 
-    public function belongsToMany($modelName, $joinTableName, $currentColumnName, $remoteColumnName){
+    public function belongsToMany($modelName, $joinTableName, $currentColumnName, $remoteColumnName)
+    {
         $remoteTable = $modelName::getTableName();
         $sql = "SELECT * FROM $remoteTable WHERE `id` in (SELECT $remoteColumnName FROM $joinTableName WHERE $currentColumnName = :thisId)";
 
@@ -181,10 +188,11 @@ abstract class AbstractModel
 
         $res = [];
 
-        while($row = $stmt->fetch()){
+        while ($row = $stmt->fetch()) {
             $obj = new $modelName();
-            foreach($row as $field => $value)
+            foreach ($row as $field => $value) {
                 $obj->$field = $value;
+            }
             $res[] = $obj;
         }
 
