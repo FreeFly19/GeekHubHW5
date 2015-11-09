@@ -1,4 +1,4 @@
-<img src="https://travis-ci.org/FreeFly19/GeekHubHW5.svg"><br>
+<a href="https://travis-ci.org/FreeFly19/GeekHubHW5"><img src="https://travis-ci.org/FreeFly19/GeekHubHW5.svg"></a><br>
 
 GeekHub homework #5 by Alexandr Melnik
 -----------------------------------
