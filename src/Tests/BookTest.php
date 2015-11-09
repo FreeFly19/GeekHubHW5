@@ -10,24 +10,36 @@ namespace Tests;
 
 use Models\Book;
 
-class BookTest extends \PHPUnit_Framework_TestCase{
+class BookTest extends \PHPUnit_Framework_TestCase
+{
 
-    public function getPdo(){
-        return $this->getMockBuilder("\\PDO")
-            ->disableOriginalConstructor()
+    public function getPdo()
+    {
+        return $this->getMockBuilder("Tests\\PdoMock")
             ->getMock();
     }
 
-    public function testGetTableName(){
+    public function testGetTableName()
+    {
         $this->assertEquals("books", Book::getTableName());
     }
 
-    public function testParent(){
+    public function testParent()
+    {
         Book::setPDO($this->getPdo());
         $this->assertInstanceOf("App\\AbstractModel", new Book());
     }
 
-    public function testInsert(){
+    public function testPdoSetterGetter()
+    {
+        $pdo = $this->getPdo();
+        Book::setPDO($pdo);
+
+        $this->assertEquals($pdo, Book::getPDO());
+    }
+
+    public function testInsert()
+    {
         $pdo = $this->getPdo();
         $pdo->method("lastInsertId")->willReturn(1234);
 
@@ -44,14 +56,8 @@ class BookTest extends \PHPUnit_Framework_TestCase{
         $this->assertEquals(1234, $book->id);
     }
 
-    public function testPdoSetterGetter(){
-        $pdo = $this->getPdo();
-        Book::setPDO($pdo);
-
-        $this->assertEquals($pdo, Book::getPDO());
-    }
-
-    public function testRemove(){
+    public function testRemove()
+    {
         $pdo = $this->getPdo();
         $stmt = $this->getMock("\\PDOStatement", ['bindParam']);
         $pdo->method("prepare")->willReturn($stmt);
@@ -64,6 +70,5 @@ class BookTest extends \PHPUnit_Framework_TestCase{
 
         $this->assertNull($book->id);
     }
-
 
 } 
