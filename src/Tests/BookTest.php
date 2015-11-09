@@ -50,7 +50,7 @@ class BookTest extends \PHPUnit_Framework_TestCase
         Book::setPDO($pdo);
 
         $book = new Book();
-        $this->assertNull($book->id);
+        $this->assertAttributeEmpty('id', $book);
 
         $book->save();
         $this->assertEquals(1234, $book->id);
@@ -69,6 +69,21 @@ class BookTest extends \PHPUnit_Framework_TestCase
         $book->remove();
 
         $this->assertNull($book->id);
+    }
+
+    /**
+     * @dataProvider attributesDataProvider
+     */
+    public function testAttributesExists($attr){
+        $this->assertClassHasAttribute($attr, 'Models\\Book');
+    }
+
+    public function attributesDataProvider(){
+        return [
+            ['id'],
+            ['name'],
+            ['genre_id']
+        ];
     }
 
 } 
