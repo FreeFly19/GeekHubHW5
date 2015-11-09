@@ -1,5 +1,6 @@
-# GeekHubHM4
-GeekHub homework #4 by Alexandr Melnik
+<img src="https://travis-ci.org/FreeFly19/GeekHubHW5.svg"><br>
+
+GeekHub homework #5 by Alexandr Melnik
 -----------------------------------
 For install go to config, rename "database.php-dist" to "database.php" and configure him.
 
